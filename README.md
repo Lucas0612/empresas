@@ -6,6 +6,7 @@ Instalar o phpunit(é necessário salvar o local do arquivo nas variáveis de am
 
 Para rodar a aplicação,abra o cmd, abra a pasta onde se encontra a aplicação e execute:  
     php -S localhost:8888 -t public public/index.php
+    o acesso à aplicação de dará direntamento no browser pelo enreço "localhost:8888".
 
 
 Para importar os dados financeiros clique no botão "importar" que está na página principal. Ele irá direcionar para a página desejada. Após isso, clique em "escolher arquivo". É necessário que o arquivo importado esteja em formato txt, sendo formatado da seguinte maneira:       
