@@ -25,8 +25,21 @@
 </table>
 
 
-    <h1 class="ml-3"> Importar dados do arquivo TXT</h1>
+    <h1 class="ml-3"> Importar dados do arquivo TXT</h1>    
     <form method="post" action="/importar/" enctype="multipart/form-data">
+    <div class="form-group">
+    <label for="exampleFormControlSelect1">Select de exemplo</label>
+    <select class="form-control" id="1" name="campoemp">     
+        <?php
+           foreach ($empresas as $empresa){   
+             echo '<option>',$empresa['nome_empresa'],'</option>' ;
+           }            
+        ?>
+      
+      
+    </select>
+  </div>
+
     <label class="ml-3 mt-3">Arquivo</label>
     <input type="file" name="arquivo"><br><br>
     

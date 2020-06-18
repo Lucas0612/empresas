@@ -30,19 +30,26 @@
     "autoload": {
         "psr-4": {
             "App\\": "src/"
-        }
+        },
+        "classmap": [
+            "src/calculo.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
+            "App\\": "src/",
             "Tests\\": "tests/"
-        }
+        },
+        "classmap": [
+            "src/calculo.php"
+        ]
     },
 	"scripts": {
         "start": "php -S 0.0.0.0:8080 -t public public/index.php",
-        "test": "phpunit",
+        "test": "vendor/bin/phpunit",
         "phpcs": "phpcs --standard=PSR2 app/",
         "phploc": "phploc app/",
-        "phpcpd": "phpcpd app/"
+        "phpcpd": "phpcpd app/"       
 	}
 
 }

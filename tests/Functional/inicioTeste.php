@@ -2,19 +2,18 @@
 
 namespace Tests;
 
-use App\importar;
 use PHPUnit\Framework\TestCase;
 
- class inicioTeste extends TestCase {   
-    
 
-    public function Setup()
+class inicioTeste extends TestCase { 
+     
+    public function setUp(): void
     {
-        
     }
 
-    public function TestaIndiceMenorQueZero(): void    
-    {
+    public function testIndiceMenorQueZero(): void  
+    {       
+        
         $args = array(
             "pontuacao" => 50,
             "nome_empresa"
@@ -26,28 +25,30 @@ use PHPUnit\Framework\TestCase;
 
     }
 
-    public function TestarIndiceMaiorQueCem(): void
-    {
+    public function testIndiceMaiorQueCem(): void
+    {       
+
         $args = array(
             "pontuacao" => 50,
             "nome_empresa"
         );
         $notas = 50;
         $debitos = 0;
-        $this->assertEquals(100, $indice = CalculaIndice($args, $notas, $debitos));
+        $this->assertEquals(100, CalculaIndice($args, $notas, $debitos));
     }
 
     // assertLessThanOrEqual
 
-    public function TestarIndice(): void
+    public function testIndice41PorCento(): void
     {
+        
         $args = array(
             "pontuacao" => 50,
             "nome_empresa"
         );
         $notas = 8;
         $debitos = 9;
-        $this->assertEquals(41, $indice = CalculaIndice($args, $notas, $debitos));
+        $this->assertEquals(41, $indice =  CalculaIndice($args, $notas, $debitos));
 
     } 
 

@@ -1,6 +1,6 @@
-<phpunit bootstrap="vendor/autoload.php">
+<phpunit bootstrap="vendor/autoload.php" colors="true" verbose="true">
     <testsuites>
-        <testsuite name="SlimSkeleton">
+        <testsuite name="CalcTest">
             <directory>tests</directory>
         </testsuite>
     </testsuites>

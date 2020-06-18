@@ -26,9 +26,11 @@ return function (App $app) {
 
     });
 
-    $app->post('/importar/', function (Request $request, Response $response, array $args) use ($container) {
-
+    $app->post('/importar/', function (Request $request, Response $response, array $args) use ($container) {        
         // Sample log message
+
+        $empresaSelecionada = $_POST['campoemp'];        
+
         $container->get('logger')->info("Slim-Skeleton '/' route");
 
         $conexao = $container->get('pdo');
@@ -46,22 +48,22 @@ return function (App $app) {
         $nota_fiscal = $valor[1];
         $debito = $valor[2];
 
-        $resultSet = $conexao->query('SELECT * FROM dados_empresas')->fetchAll();
+        $idEmpresa = $conexao->query("SELECT * FROM registro_empresas WHERE nome_empresa like  '$empresaSelecionada' ")->fetchAll();        
+         
+        if ($idEmpresa[0]['id'] != $id) {
+           return "Empresa não localizada";
+        }
 
+        $resultSet = $conexao->query("SELECT * FROM dados_empresas where id_empresas = '$id' ")->fetchAll();
+        
         $args['valores'] = $resultSet;
 
-    
-        foreach($args['valores'] as $valores){
-
+        $resultSet[0]['total_notas'] = $resultSet[0]['total_notas'] + $nota_fiscal;
+        $resultSet[0]['total_debito'] = $resultSet[0]['total_debito'] + $debito;
         
-            $valores['total_notas'] = $valores['total_notas'] + $nota_fiscal;
-            $valores['total_debito'] = $valores['total_debito'] + $debito;
-            echo($valor['total_notas']);
-            $notas = $valores['total_notas'];
-            $debt = $valores['total_debito'];
-            $conexao->query("UPDATE dados_empresas SET total_notas = '$notas',total_debito = '$debt' WHERE id_empresas LIKE $id");
-
-        }
+        $notas = $resultSet[0]['total_notas'];
+        $debt = $resultSet[0]['total_debito'];
+        $conexao->query("UPDATE dados_empresas SET total_notas = '$notas',total_debito = '$debt' WHERE id_empresas LIKE $id"); 
 
 
 
@@ -74,31 +76,9 @@ return function (App $app) {
 
         $conexao->query("UPDATE registro_empresas SET pontuacao= '$pontuacao' WHERE id LIKE $id");
 
-        // foreach($args['pontuacao'] as $pontuacao){
-
-        //  $pontTotal =((0.02 * $notas) * $pontuacao['pontuacao'])+$pontuacao['pontuacao'];
-        //  $pontTotal = floor($pontTotal);
-        //  echo '<br>';
-        // //  echo $pontTotal;
- 
-        //  $pontTotal2 = $pontTotal-((0.04 * $debt) * $pontTotal);
-        //  $pontTotal2 = ceil($pontTotal2);
-        //  echo '<br>';
-        // //  echo $pontTotal2;
-        //  $conexao->query("UPDATE registro_empresas SET pontuacao= '$pontTotal2' WHERE id LIKE $id");
+        header("Refresh: 0; url=routesInicio.php");
 
  
-        // }
-
-        // if ($pontTotal2<0){
-        //     $conexao->query("UPDATE registro_empresas SET pontuacao= '0' WHERE id LIKE $id");
-        // }
-
-        // if ($pontTotal2>100){
-        //     $conexao->query("UPDATE registro_empresas SET pontuacao= '100' WHERE id LIKE $id");
-        // }
-
-        // Render index view
         return $container->get('renderer')->render($response, 'texto.phtml', $args);
 
 
@@ -112,14 +92,9 @@ function CalculaIndice(array $args, int $notas, int $debitos): float {
 
         $pontTotal =((0.02 * $notas) * $pontuacao['pontuacao'])+$pontuacao['pontuacao'];
         $pontTotal = floor($pontTotal);
-        echo '<br>';
-       //  echo $pontTotal;
 
         $pontTotal2 = $pontTotal-((0.04 * $debitos) * $pontTotal);
         $pontTotal2 = ceil($pontTotal2);
-        echo '<br>';
-       //  echo $pontTotal2;
-
        
        }
 

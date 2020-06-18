@@ -40,7 +40,7 @@ $routes($app);
  
 $routes = require __DIR__ . '/../src/rotaRanking.php';
 $routes($app);
- 
+
  
 // Run app
 $app->run();
